@@ -1,5 +1,6 @@
 package com.example.nagwaassignment.Adapters;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class DownloadedFilesAdapter extends RecyclerView.Adapter<DownloadedFiles
     ArrayList<FileModel> files = new ArrayList<>();
     private static final String TAG = "DownloadedFilesAdapter";
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setFiles(ArrayList<FileModel> files) {
         this.files = files;
         notifyDataSetChanged();
@@ -57,7 +59,7 @@ public class DownloadedFilesAdapter extends RecyclerView.Adapter<DownloadedFiles
             binding.downloadingProgressBar.setVisibility(View.GONE);
             binding.downloadImageView.setVisibility(View.GONE);
             binding.itemIcon.setImageResource(R.drawable.nagwa_icon);
-            binding.downloadingState.setVisibility(View.GONE);
+            binding.downloadStateIcon.setVisibility(View.GONE);
 
             Log.d(TAG, "bind: "+model.toString());
         }

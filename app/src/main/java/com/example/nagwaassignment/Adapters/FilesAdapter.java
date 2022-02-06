@@ -65,15 +65,15 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.FilesHolder>
             binding.fileTypeTextView.setText(model.getType());
             binding.downloadingProgressBar.setMax(100);
             binding.downloadingProgressBar.setIndeterminate(false);
-            binding.itemIcon.setImageResource(R.drawable.nagwa_icon);
+            binding.itemIcon.setImageResource(R.drawable.file_icon);
             binding.downloadingProgressBar.setProgress(model.getDownloadingProgress());
 
             if (model.isDownload() ){
-                binding.downloadingState.setVisibility(View.VISIBLE);
+                binding.downloadStateIcon.setVisibility(View.VISIBLE);
                 binding.downloadImageView.setVisibility(View.GONE);
                 binding.downloadingProgressBar.setVisibility(View.GONE);
             }else {
-                binding.downloadingState.setVisibility(View.GONE);
+                binding.downloadStateIcon.setVisibility(View.GONE);
                 binding.downloadImageView.setVisibility(View.VISIBLE);
             }
 

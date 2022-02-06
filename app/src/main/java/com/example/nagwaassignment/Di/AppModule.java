@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class AppModule {
-    private static final String BASE_URL = "https://abdo4545.free.beeceptor.com/";
+    private static final String BASE_URL = "https://moashrafff.free.beeceptor.com";
 
     Application mApplication;
 
