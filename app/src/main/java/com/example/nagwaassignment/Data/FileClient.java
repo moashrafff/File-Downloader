@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FileClient {
 
-    private static final String BASE_URL = "https://ashraf.free.beeceptor.com/";
+    private static final String BASE_URL = "https://abdo4545.free.beeceptor.com/";
     private FileInterface fileInterface;
     private static FileClient INSTANCE;
 

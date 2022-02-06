@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Environment;
@@ -36,7 +36,7 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
     private static final String ARG_PARAM1 = "param1";
     private String mParam1;
     private final String NOTIFICATION_TITLE = "Nagwa";
-    FragmentFilesBinding binding ;
+    FragmentFilesBinding binding;
     private static final String TAG = "FilesFragment";
 
     public FilesFragment() {
@@ -64,7 +64,7 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-         binding = FragmentFilesBinding.inflate(getLayoutInflater(), container, false);
+        binding = FragmentFilesBinding.inflate(getLayoutInflater(), container, false);
         adapter = new FilesAdapter();
         adapter.setRecyclerViewOnClickInterface(this);
         binding.fragRv.setAdapter(adapter);
@@ -76,26 +76,39 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(FileViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(FileViewModel.class);
         viewModel.getFiles();
+        getDownloadedFilesAndGetAdapter();
+
+    }
+
+    private void getDownloadedFilesAndGetAdapter(){
+        viewModel.getDownloadedFiles();
         viewModel.files.observe(requireActivity(), new Observer<List<FileModel>>() {
             @Override
-            public void onChanged(List<FileModel> fileModels) {
-                adapter.setFiles((ArrayList<FileModel>) fileModels);
+            public void onChanged(List<FileModel> newFileModels) {
+                viewModel.downloadedFilesMutableLiveData.observe(requireActivity(), new Observer<List<FileModel>>() {
+                    @Override
+                    public void onChanged(List<FileModel> downloadedFileModels) {
+                        Log.d(TAG, "onChanged: ");
+                        List<FileModel> fileModels = compareBetweenDownloadedAndNewFiles(newFileModels, downloadedFileModels);
+                        binding.fragRv.getRecycledViewPool().clear();
+                        adapter.setFiles((ArrayList<FileModel>) fileModels);
+                    }
+                });
+
             }
         });
     }
 
 
-
-
-    public void downLoad(String url, String outputFileName, String title , Context context , int position , ArrayList<FileModel> models){
+    public void downLoad(String url, String outputFileName, String title, Context context, int position, ArrayList<FileModel> models) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setTitle(title);
         request.setDescription("Downloading .. " + outputFileName);
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.allowScanningByMediaScanner();
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,outputFileName);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, outputFileName);
 
         DownloadManager manager = (DownloadManager) context.getSystemService(context.DOWNLOAD_SERVICE);
         long downloadId = manager.enqueue(request);
@@ -122,19 +135,28 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
                     if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
                         models.get(position).setDownloadingProgress(100);
                         Log.d(TAG, "run: Complete");
-                        // insert into room method
 
                         downloading = false;
+                        FileModel fileModel = models.get(position);
+                        fileModel.setDownload(true);
+                        viewModel.insertFile(fileModel);
+
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                getDownloadedFilesAndGetAdapter();
+                            }
+                        });
 
                     }
 
                     final int dl_progress = (int) ((bytes_downloaded * 100) / bytes_total);
-                    Log.d(TAG, "run: "+dl_progress);
-                    if (dl_progress>=0){
+                    Log.d(TAG, "run: " + dl_progress);
+                    if (dl_progress >= 0) {
                         models.get(position).setDownloadingProgress(dl_progress);
                     }
 
-                    adapter.setFiles(models,position);
+                    adapter.setFiles(models, position);
                     binding.fragRv.post(new Runnable() {
                         @Override
                         public void run() {
@@ -151,17 +173,34 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
     @Override
     public void onItemClick(int position, ArrayList<FileModel> files) {
         FileModel clickedFile = files.get(position);
-        downLoad(clickedFile.getUrl(),clickedFile.getName(),NOTIFICATION_TITLE,requireContext(),position,files);
+        downLoad(clickedFile.getUrl(), clickedFile.getName(), NOTIFICATION_TITLE, requireContext(), position, files);
+
+
     }
 
-    private FileModel getFileModelByFileId(ArrayList<FileModel> models,int downloaderId) {
-        for (FileModel fileModel: models
-             ) {
-            if ( fileModel.getDownloadingId() == downloaderId){
-                return fileModel ;
+    private FileModel getFileModelByFileId(ArrayList<FileModel> models, int downloaderId) {
+        for (FileModel fileModel : models
+        ) {
+            if (fileModel.getDownloadingId() == downloaderId) {
+                return fileModel;
             }
         }
         return null;
     }
+
+    private List<FileModel> compareBetweenDownloadedAndNewFiles(List<FileModel>newFiles, List<FileModel>downloadedFiles ){
+        for (FileModel newFileModel:newFiles
+             ) {
+            for (FileModel downLoadedFileModel: downloadedFiles
+                 ) {
+                if (newFileModel.getId() == downLoadedFileModel.getId()){
+                    newFileModel.setDownload(true);
+                }
+            }
+        }
+        return newFiles;
+    }
+
+
 
 }

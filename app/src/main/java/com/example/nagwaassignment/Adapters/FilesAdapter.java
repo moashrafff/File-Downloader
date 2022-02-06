@@ -31,7 +31,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.FilesHolder>
 
     public void setFiles(ArrayList<FileModel> files) {
         this.files = files;
-        notifyItemInserted(files.size()-1);
+        notifyDataSetChanged();
     }
     public void setFiles(ArrayList<FileModel> files, int position) {
         this.files = files;
@@ -72,7 +72,16 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.FilesHolder>
             binding.itemIcon.setImageResource(R.drawable.nagwa_icon);
             binding.progressBar.setProgress(model.getDownloadingProgress());
 
-            Log.d(TAG, "bind: "+model.getDownloadingProgress());
+            if (model.isDownload() ){
+                binding.downloadingState.setVisibility(View.VISIBLE);
+                binding.imageView5.setVisibility(View.GONE);
+                binding.progressBar.setVisibility(View.GONE);
+            }else {
+                binding.downloadingState.setVisibility(View.GONE);
+                binding.imageView5.setVisibility(View.VISIBLE);
+            }
+
+            Log.d(TAG, "bind: "+model.toString());
 
             binding.imageView5.setOnClickListener(new View.OnClickListener() {
                 @Override

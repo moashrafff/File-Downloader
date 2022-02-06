@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
-        android:theme="@style/Theme.NagwaAssignment">
+        android:theme="@style/Theme.NagwaAssignment"
+        android:usesCleartextTraffic="true"
+        >
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">

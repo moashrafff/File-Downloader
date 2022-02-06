@@ -1,5 +1,6 @@
 package com.example.nagwaassignment.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,11 @@ import java.util.ArrayList;
 public class DownloadedFilesAdapter extends RecyclerView.Adapter<DownloadedFilesAdapter.DownloadedFilesHolder> {
 
     ArrayList<FileModel> files = new ArrayList<>();
+    private static final String TAG = "DownloadedFilesAdapter";
 
     public void setFiles(ArrayList<FileModel> files) {
         this.files = files;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -36,7 +39,7 @@ public class DownloadedFilesAdapter extends RecyclerView.Adapter<DownloadedFiles
 
     @Override
     public int getItemCount() {
-        return 0;
+        return files.size();
     }
 
     class DownloadedFilesHolder extends RecyclerView.ViewHolder{
@@ -52,6 +55,11 @@ public class DownloadedFilesAdapter extends RecyclerView.Adapter<DownloadedFiles
             binding.nameTv.setText(model.getName());
             binding.typeTv.setText(model.getType());
             binding.progressBar.setVisibility(View.GONE);
+            binding.imageView5.setVisibility(View.GONE);
+            binding.itemIcon.setImageResource(R.drawable.nagwa_icon);
+            binding.downloadingState.setVisibility(View.GONE);
+
+            Log.d(TAG, "bind: "+model.toString());
         }
     }
 }
