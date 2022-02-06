@@ -4,9 +4,10 @@ import android.app.Application;
 
 import androidx.room.Room;
 
-import com.example.nagwaassignment.Data.FileInterface;
-import com.example.nagwaassignment.DataBase.FileDao;
-import com.example.nagwaassignment.DataBase.FilesDataBase;
+import com.example.nagwaassignment.DataBase.remote.FileInterface;
+import com.example.nagwaassignment.DataBase.local.FileDao;
+import com.example.nagwaassignment.DataBase.local.FilesDataBase;
+import com.example.nagwaassignment.repository.Repository;
 
 
 import javax.inject.Singleton;
@@ -44,7 +45,8 @@ public class AppModule {
                 .build();
         return retrofit.create(FileInterface.class);
     }
-
+    @Provides
+    @Singleton
     FileDao provideFileDao(){
         FileDao files_database = Room.databaseBuilder(mApplication.getApplicationContext(),
                 FilesDataBase.class, "FILES_DATABASE")
@@ -53,4 +55,9 @@ public class AppModule {
         return files_database;
     }
 
+    @Provides
+    @Singleton
+    Repository provideRepository(FileDao fileDao,FileInterface fileInterface){
+        return new Repository(fileDao,fileInterface);
+    }
 }

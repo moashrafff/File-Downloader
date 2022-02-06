@@ -1,9 +1,5 @@
 package com.example.nagwaassignment.Adapters;
 
-import android.app.DownloadManager;
-import android.content.Context;
-import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nagwaassignment.Pojo.FileModel;
 import com.example.nagwaassignment.R;
-import com.example.nagwaassignment.RecyclerViewOnClickInterface;
+import com.example.nagwaassignment.Adapters.utils.RecyclerViewOnClickInterface;
 import com.example.nagwaassignment.databinding.FileItemBinding;
 
 import java.util.ArrayList;
@@ -65,25 +61,25 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.FilesHolder>
         }
         public void bind(FileModel model, ArrayList<FileModel> files){
             this.model = model ;
-            binding.nameTv.setText(model.getName());
-            binding.typeTv.setText(model.getType());
-            binding.progressBar.setMax(100);
-            binding.progressBar.setIndeterminate(false);
+            binding.fileNameTextView.setText(model.getName());
+            binding.fileTypeTextView.setText(model.getType());
+            binding.downloadingProgressBar.setMax(100);
+            binding.downloadingProgressBar.setIndeterminate(false);
             binding.itemIcon.setImageResource(R.drawable.nagwa_icon);
-            binding.progressBar.setProgress(model.getDownloadingProgress());
+            binding.downloadingProgressBar.setProgress(model.getDownloadingProgress());
 
             if (model.isDownload() ){
                 binding.downloadingState.setVisibility(View.VISIBLE);
-                binding.imageView5.setVisibility(View.GONE);
-                binding.progressBar.setVisibility(View.GONE);
+                binding.downloadImageView.setVisibility(View.GONE);
+                binding.downloadingProgressBar.setVisibility(View.GONE);
             }else {
                 binding.downloadingState.setVisibility(View.GONE);
-                binding.imageView5.setVisibility(View.VISIBLE);
+                binding.downloadImageView.setVisibility(View.VISIBLE);
             }
 
             Log.d(TAG, "bind: "+model.toString());
 
-            binding.imageView5.setOnClickListener(new View.OnClickListener() {
+            binding.downloadImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     recyclerViewOnClickInterface.onItemClick(getAdapterPosition(), files);

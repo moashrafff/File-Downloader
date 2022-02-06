@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -16,34 +15,41 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nagwaassignment.Adapters.DownloadedFilesAdapter;
-import com.example.nagwaassignment.FileViewModel;
-import com.example.nagwaassignment.Pojo.FileModel;
-import com.example.nagwaassignment.R;
+import com.example.nagwaassignment.Di.AppComponent;
+import com.example.nagwaassignment.Di.AppModule;
+import com.example.nagwaassignment.Di.DaggerAppComponent;
 import com.example.nagwaassignment.databinding.FragmentDownloadedFilesBinding;
+import com.example.nagwaassignment.viewModel.FileViewModel;
+import com.example.nagwaassignment.Pojo.FileModel;
+import com.example.nagwaassignment.ui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownloadedFiles extends Fragment {
+import javax.inject.Inject;
+
+public class DownloadedFilesFragment extends Fragment {
 
      FileViewModel viewModel;
      DownloadedFilesAdapter downloadedFilesAdapter;
     FragmentDownloadedFilesBinding binding;
     private static final String ARG_PARAM1 = "param1";
     private static final String TAG = "DownloadedFiles";
-
+    @Inject
+    FileViewModel fileViewModel;
+    AppComponent build;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
 
 
-    public DownloadedFiles() {
+    public DownloadedFilesFragment() {
 
     }
 
 
-    public static DownloadedFiles newInstance(String param1) {
-        DownloadedFiles fragment = new DownloadedFiles();
+    public static DownloadedFilesFragment newInstance(String param1) {
+        DownloadedFilesFragment fragment = new DownloadedFilesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -53,6 +59,12 @@ public class DownloadedFiles extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        build = DaggerAppComponent.builder().appModule(new AppModule(getActivity().getApplication())).build();
+        build.inject((MainActivity) requireActivity());
+        viewModel = ViewModelProviders.of(this).get(FileViewModel.class);
+
+        viewModel.injectRepo(build.repository());
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
 
@@ -75,7 +87,7 @@ public class DownloadedFiles extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(FileViewModel.class);
+
         viewModel.getDownloadedFiles();
         viewModel.downloadedFilesMutableLiveData.observe(requireActivity(), new Observer<List<FileModel>>() {
             @Override
@@ -86,4 +98,5 @@ public class DownloadedFiles extends Fragment {
         });
 
     }
+
 }

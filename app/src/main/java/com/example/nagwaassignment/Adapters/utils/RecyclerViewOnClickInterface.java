@@ -1,4 +1,4 @@
-package com.example.nagwaassignment;
+package com.example.nagwaassignment.Adapters.utils;
 
 import com.example.nagwaassignment.Pojo.FileModel;
 

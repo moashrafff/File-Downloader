@@ -1,10 +1,8 @@
 package com.example.nagwaassignment.repository;
 
-import android.app.Application;
-
-import com.example.nagwaassignment.Data.FileInterface;
-import com.example.nagwaassignment.DataBase.FileDao;
-import com.example.nagwaassignment.DataBase.FilesDataBase;
+import com.example.nagwaassignment.DataBase.remote.FileInterface;
+import com.example.nagwaassignment.DataBase.local.FileDao;
+import com.example.nagwaassignment.DataBase.local.FilesDataBase;
 import com.example.nagwaassignment.Pojo.FileModel;
 
 import java.util.List;
@@ -16,7 +14,9 @@ import io.reactivex.Observable;
 public class Repository {
 
 
+    @Inject
     FileDao fileDao;
+    @Inject
     FileInterface fileInterface;
 
     @Inject

@@ -1,4 +1,4 @@
-package com.example.nagwaassignment.DataBase;
+package com.example.nagwaassignment.DataBase.local;
 
 import androidx.room.Dao;
 import androidx.room.Insert;

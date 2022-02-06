@@ -52,10 +52,10 @@ public class DownloadedFilesAdapter extends RecyclerView.Adapter<DownloadedFiles
         }
         public void bind(FileModel model){
             this.model = model ;
-            binding.nameTv.setText(model.getName());
-            binding.typeTv.setText(model.getType());
-            binding.progressBar.setVisibility(View.GONE);
-            binding.imageView5.setVisibility(View.GONE);
+            binding.fileNameTextView.setText(model.getName());
+            binding.fileTypeTextView.setText(model.getType());
+            binding.downloadingProgressBar.setVisibility(View.GONE);
+            binding.downloadImageView.setVisibility(View.GONE);
             binding.itemIcon.setImageResource(R.drawable.nagwa_icon);
             binding.downloadingState.setVisibility(View.GONE);
 

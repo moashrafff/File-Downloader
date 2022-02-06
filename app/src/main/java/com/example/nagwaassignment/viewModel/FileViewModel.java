@@ -1,17 +1,17 @@
-package com.example.nagwaassignment;
+package com.example.nagwaassignment.viewModel;
 
-import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
-import com.example.nagwaassignment.Data.FileClient;
 import com.example.nagwaassignment.Pojo.FileModel;
 import com.example.nagwaassignment.repository.Repository;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -19,18 +19,23 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FileViewModel extends AndroidViewModel {
+public class FileViewModel extends ViewModel {
 
+
+    @Inject
     Repository repository;
+
     private static final String TAG = "FileViewModel";
     private MutableLiveData<List<FileModel>> _downloadedFilesMutableLiveData = new MutableLiveData<>();
     public MutableLiveData<List<FileModel>> files = new MutableLiveData<>();
     public MutableLiveData<List<FileModel>> downloadedFilesMutableLiveData = new MutableLiveData<>();
 
-    public FileViewModel(@NonNull Application application) {
-        super(application);
-        repository = new Repository();
-    }
+
+//
+//    @Inject
+//    public FileViewModel(Repository repository) {
+//        this.repository = repository;
+//    }
 
     public void insertFile(FileModel fileModel) {
         repository.insertFile(fileModel);
@@ -67,7 +72,7 @@ public class FileViewModel extends AndroidViewModel {
 
     public void getFiles() {
 
-        Observable observable = FileClient.getINSTANCE().getFiles()
+        Observable observable = repository.getNewFiles()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
@@ -94,5 +99,9 @@ public class FileViewModel extends AndroidViewModel {
         };
 
         observable.subscribe(observer);
+    }
+
+    public void injectRepo(Repository repository) {
+        this.repository=repository;
     }
 }

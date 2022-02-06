@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Environment;
@@ -20,11 +20,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.nagwaassignment.FileViewModel;
+import com.example.nagwaassignment.Di.AppComponent;
+import com.example.nagwaassignment.Di.AppModule;
+import com.example.nagwaassignment.Di.DaggerAppComponent;
+import com.example.nagwaassignment.viewModel.FileViewModel;
 import com.example.nagwaassignment.Adapters.FilesAdapter;
 import com.example.nagwaassignment.Pojo.FileModel;
-import com.example.nagwaassignment.RecyclerViewOnClickInterface;
+import com.example.nagwaassignment.Adapters.utils.RecyclerViewOnClickInterface;
 import com.example.nagwaassignment.databinding.FragmentFilesBinding;
+import com.example.nagwaassignment.ui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +42,11 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
     private final String NOTIFICATION_TITLE = "Nagwa";
     FragmentFilesBinding binding;
     private static final String TAG = "FilesFragment";
+
+
+    AppComponent build;
+
+
 
     public FilesFragment() {
         // Required empty public constructor
@@ -55,6 +64,8 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        build = DaggerAppComponent.builder().appModule(new AppModule(getActivity().getApplication())).build();
+        build.inject((MainActivity) requireActivity());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
@@ -67,22 +78,25 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
         binding = FragmentFilesBinding.inflate(getLayoutInflater(), container, false);
         adapter = new FilesAdapter();
         adapter.setRecyclerViewOnClickInterface(this);
-        binding.fragRv.setAdapter(adapter);
-        binding.fragRv.setHasFixedSize(true);
-        binding.fragRv.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.filesRecyclerView.setAdapter(adapter);
+        binding.filesRecyclerView.setHasFixedSize(true);
+        binding.filesRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(FileViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(FileViewModel.class);
+        viewModel.injectRepo(build.repository()
+);
+
         viewModel.getFiles();
         getDownloadedFilesAndGetAdapter();
 
     }
 
-    private void getDownloadedFilesAndGetAdapter(){
+    private void getDownloadedFilesAndGetAdapter() {
         viewModel.getDownloadedFiles();
         viewModel.files.observe(requireActivity(), new Observer<List<FileModel>>() {
             @Override
@@ -92,7 +106,7 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
                     public void onChanged(List<FileModel> downloadedFileModels) {
                         Log.d(TAG, "onChanged: ");
                         List<FileModel> fileModels = compareBetweenDownloadedAndNewFiles(newFileModels, downloadedFileModels);
-                        binding.fragRv.getRecycledViewPool().clear();
+                        binding.filesRecyclerView.getRecycledViewPool().clear();
                         adapter.setFiles((ArrayList<FileModel>) fileModels);
                     }
                 });
@@ -157,7 +171,7 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
                     }
 
                     adapter.setFiles(models, position);
-                    binding.fragRv.post(new Runnable() {
+                    binding.filesRecyclerView.post(new Runnable() {
                         @Override
                         public void run() {
                             adapter.notifyItemChanged(position);
@@ -188,12 +202,12 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
         return null;
     }
 
-    private List<FileModel> compareBetweenDownloadedAndNewFiles(List<FileModel>newFiles, List<FileModel>downloadedFiles ){
-        for (FileModel newFileModel:newFiles
-             ) {
-            for (FileModel downLoadedFileModel: downloadedFiles
-                 ) {
-                if (newFileModel.getId() == downLoadedFileModel.getId()){
+    private List<FileModel> compareBetweenDownloadedAndNewFiles(List<FileModel> newFiles, List<FileModel> downloadedFiles) {
+        for (FileModel newFileModel : newFiles
+        ) {
+            for (FileModel downLoadedFileModel : downloadedFiles
+            ) {
+                if (newFileModel.getId() == downLoadedFileModel.getId()) {
                     newFileModel.setDownload(true);
                 }
             }
@@ -202,5 +216,5 @@ public class FilesFragment extends Fragment implements RecyclerViewOnClickInterf
     }
 
 
-
 }
+
