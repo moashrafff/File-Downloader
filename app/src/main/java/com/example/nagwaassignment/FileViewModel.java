@@ -29,7 +29,7 @@ public class FileViewModel extends AndroidViewModel {
 
     public FileViewModel(@NonNull Application application) {
         super(application);
-        repository = new Repository(application);
+        repository = new Repository();
     }
 
     public void insertFile(FileModel fileModel) {

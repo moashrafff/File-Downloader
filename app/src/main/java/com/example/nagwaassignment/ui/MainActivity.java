@@ -10,6 +10,10 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.example.nagwaassignment.Data.FileInterface;
+import com.example.nagwaassignment.Di.AppComponent;
+import com.example.nagwaassignment.Di.AppModule;
+import com.example.nagwaassignment.Di.DaggerAppComponent;
 import com.example.nagwaassignment.Fragments.DownloadedFiles;
 import com.example.nagwaassignment.Fragments.FilesFragment;
 import com.example.nagwaassignment.Adapters.PagerAdapter;
@@ -20,8 +24,12 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
 
+    @Inject
+    FileInterface fileInterface ;
     ActivityMainBinding binding;
     private static final int permissionReqCode = 5 ;
 
@@ -57,7 +65,12 @@ public class MainActivity extends AppCompatActivity {
         }).attach();
 
 
+        AppComponent build = DaggerAppComponent.builder().appModule(new AppModule()).build();
+        build.inject(this);
+        fileInterface.getFiles();
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
