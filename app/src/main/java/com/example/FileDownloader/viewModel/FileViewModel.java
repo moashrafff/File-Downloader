@@ -1,4 +1,4 @@
-package com.example.nagwaassignment.viewModel;
+package com.example.FileDownloader.viewModel;
 
 import android.util.Log;
 
@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.nagwaassignment.Pojo.FileModel;
-import com.example.nagwaassignment.repository.Repository;
+import com.example.FileDownloader.Pojo.FileModel;
+import com.example.FileDownloader.repository.Repository;
 
 import java.util.List;
 

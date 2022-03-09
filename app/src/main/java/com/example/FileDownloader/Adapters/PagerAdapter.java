@@ -1,4 +1,4 @@
-package com.example.nagwaassignment.Adapters;
+package com.example.FileDownloader.Adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

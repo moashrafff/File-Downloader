@@ -1,4 +1,4 @@
-package com.example.nagwaassignment.Pojo;
+package com.example.FileDownloader.Pojo;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

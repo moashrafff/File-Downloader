@@ -1,4 +1,4 @@
-package com.example.nagwaassignment.Fragments;
+package com.example.FileDownloader.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
@@ -20,15 +20,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.nagwaassignment.Di.AppComponent;
-import com.example.nagwaassignment.Di.AppModule;
-import com.example.nagwaassignment.Di.DaggerAppComponent;
-import com.example.nagwaassignment.viewModel.FileViewModel;
-import com.example.nagwaassignment.Adapters.FilesAdapter;
-import com.example.nagwaassignment.Pojo.FileModel;
-import com.example.nagwaassignment.Adapters.utils.RecyclerViewOnClickInterface;
-import com.example.nagwaassignment.databinding.FragmentFilesBinding;
-import com.example.nagwaassignment.ui.MainActivity;
+import com.example.FileDownloader.Di.AppComponent;
+import com.example.FileDownloader.Di.AppModule;
+import com.example.FileDownloader.Di.DaggerAppComponent;
+import com.example.FileDownloader.viewModel.FileViewModel;
+import com.example.FileDownloader.Adapters.FilesAdapter;
+import com.example.FileDownloader.Pojo.FileModel;
+import com.example.FileDownloader.Adapters.utils.RecyclerViewOnClickInterface;
+import com.example.FileDownloader.databinding.FragmentFilesBinding;
+import com.example.FileDownloader.ui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;

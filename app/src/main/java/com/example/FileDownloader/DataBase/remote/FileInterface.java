@@ -1,6 +1,6 @@
-package com.example.nagwaassignment.DataBase.remote;
+package com.example.FileDownloader.DataBase.remote;
 
-import com.example.nagwaassignment.Pojo.FileModel;
+import com.example.FileDownloader.Pojo.FileModel;
 
 import java.util.List;
 

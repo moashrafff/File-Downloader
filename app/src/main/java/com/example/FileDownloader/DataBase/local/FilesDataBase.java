@@ -1,9 +1,9 @@
-package com.example.nagwaassignment.DataBase.local;
+package com.example.FileDownloader.DataBase.local;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import com.example.nagwaassignment.Pojo.FileModel;
+import com.example.FileDownloader.Pojo.FileModel;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

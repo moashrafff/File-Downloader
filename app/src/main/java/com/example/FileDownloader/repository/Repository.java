@@ -1,9 +1,9 @@
-package com.example.nagwaassignment.repository;
+package com.example.FileDownloader.repository;
 
-import com.example.nagwaassignment.DataBase.remote.FileInterface;
-import com.example.nagwaassignment.DataBase.local.FileDao;
-import com.example.nagwaassignment.DataBase.local.FilesDataBase;
-import com.example.nagwaassignment.Pojo.FileModel;
+import com.example.FileDownloader.DataBase.remote.FileInterface;
+import com.example.FileDownloader.DataBase.local.FileDao;
+import com.example.FileDownloader.DataBase.local.FilesDataBase;
+import com.example.FileDownloader.Pojo.FileModel;
 
 import java.util.List;
 

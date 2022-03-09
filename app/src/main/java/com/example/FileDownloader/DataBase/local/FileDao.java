@@ -1,10 +1,10 @@
-package com.example.nagwaassignment.DataBase.local;
+package com.example.FileDownloader.DataBase.local;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.nagwaassignment.Pojo.FileModel;
+import com.example.FileDownloader.Pojo.FileModel;
 
 import java.util.List;
 

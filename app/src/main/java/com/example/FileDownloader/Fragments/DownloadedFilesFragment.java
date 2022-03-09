@@ -1,4 +1,4 @@
-package com.example.nagwaassignment.Fragments;
+package com.example.FileDownloader.Fragments;
 
 import android.os.Bundle;
 
@@ -14,14 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.nagwaassignment.Adapters.DownloadedFilesAdapter;
-import com.example.nagwaassignment.Di.AppComponent;
-import com.example.nagwaassignment.Di.AppModule;
-import com.example.nagwaassignment.Di.DaggerAppComponent;
-import com.example.nagwaassignment.databinding.FragmentDownloadedFilesBinding;
-import com.example.nagwaassignment.viewModel.FileViewModel;
-import com.example.nagwaassignment.Pojo.FileModel;
-import com.example.nagwaassignment.ui.MainActivity;
+import com.example.FileDownloader.Adapters.DownloadedFilesAdapter;
+import com.example.FileDownloader.Di.AppComponent;
+import com.example.FileDownloader.Di.AppModule;
+import com.example.FileDownloader.Di.DaggerAppComponent;
+import com.example.FileDownloader.databinding.FragmentDownloadedFilesBinding;
+import com.example.FileDownloader.viewModel.FileViewModel;
+import com.example.FileDownloader.Pojo.FileModel;
+import com.example.FileDownloader.ui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;

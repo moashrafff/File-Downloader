@@ -1,4 +1,4 @@
-package com.example.nagwaassignment.ui;
+package com.example.FileDownloader.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,10 +10,10 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import com.example.nagwaassignment.Fragments.DownloadedFilesFragment;
-import com.example.nagwaassignment.Fragments.FilesFragment;
-import com.example.nagwaassignment.Adapters.PagerAdapter;
-import com.example.nagwaassignment.databinding.ActivityMainBinding;
+import com.example.FileDownloader.Fragments.DownloadedFilesFragment;
+import com.example.FileDownloader.Fragments.FilesFragment;
+import com.example.FileDownloader.Adapters.PagerAdapter;
+import com.example.FileDownloader.databinding.ActivityMainBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

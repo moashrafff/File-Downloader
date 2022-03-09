@@ -1,4 +1,4 @@
-package com.example.nagwaassignment;
+package com.example.FileDownloader;
 
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
-package com.example.nagwaassignment.Adapters.utils;
+package com.example.FileDownloader.Adapters.utils;
 
-import com.example.nagwaassignment.Pojo.FileModel;
+import com.example.FileDownloader.Pojo.FileModel;
 
 import java.util.ArrayList;
 

@@ -1,11 +1,11 @@
-package com.example.nagwaassignment.Di;
+package com.example.FileDownloader.Di;
 
 import android.app.Application;
 
-import com.example.nagwaassignment.DataBase.remote.FileInterface;
-import com.example.nagwaassignment.DataBase.local.FileDao;
-import com.example.nagwaassignment.repository.Repository;
-import com.example.nagwaassignment.ui.MainActivity;
+import com.example.FileDownloader.DataBase.remote.FileInterface;
+import com.example.FileDownloader.DataBase.local.FileDao;
+import com.example.FileDownloader.repository.Repository;
+import com.example.FileDownloader.ui.MainActivity;
 
 import javax.inject.Singleton;
 

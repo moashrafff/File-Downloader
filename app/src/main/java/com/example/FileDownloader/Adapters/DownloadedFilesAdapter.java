@@ -1,4 +1,4 @@
-package com.example.nagwaassignment.Adapters;
+package com.example.FileDownloader.Adapters;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.nagwaassignment.Pojo.FileModel;
-import com.example.nagwaassignment.R;
-import com.example.nagwaassignment.databinding.FileItemBinding;
+import com.example.FileDownloader.Pojo.FileModel;
+import com.example.FileDownloader.R;
+import com.example.FileDownloader.databinding.FileItemBinding;
 
 import java.util.ArrayList;
 
