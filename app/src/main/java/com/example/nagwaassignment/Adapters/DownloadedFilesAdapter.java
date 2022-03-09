@@ -58,7 +58,7 @@ public class DownloadedFilesAdapter extends RecyclerView.Adapter<DownloadedFiles
             binding.fileTypeTextView.setText(model.getType());
             binding.downloadingProgressBar.setVisibility(View.GONE);
             binding.downloadImageView.setVisibility(View.GONE);
-            binding.itemIcon.setImageResource(R.drawable.nagwa_icon);
+            binding.itemIcon.setImageResource(R.drawable.file_icon);
             binding.downloadStateIcon.setVisibility(View.GONE);
 
             Log.d(TAG, "bind: "+model.toString());
